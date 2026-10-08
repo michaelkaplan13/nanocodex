@@ -1259,13 +1259,18 @@ async fn context_exhaustion_rejects_partial_client_calls_and_unresolved_server_e
 // matrix rejects `thinking: disabled` on Opus 5.5, Sonnet 5.5 and Fable 5.1
 // (https://platform.claude.com/docs/en/about-claude/models/extended-thinking-models),
 // so Opus 5.5/Fable 5.1 use adaptive thinking at low effort and Sonnet 5.5 its
-// lowest setting, between_tools; older models keep the text-only disabled request. No signed pre-summary reasoning may be replayed.
+// lowest setting, between_tools. Haiku 5.5 and older models keep the text-only
+// disabled request. No signed pre-summary reasoning may be replayed.
 #[tokio::test]
 async fn context_recovery_summary_uses_thinking_mode_each_model_accepts() {
     const REJECTS_DISABLED: [&str; 3] =
         ["claude-opus-5-5", "claude-sonnet-5-5", "claude-fable-5-1"];
-    const ACCEPTS_DISABLED: [&str; 3] =
-        ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"];
+    const ACCEPTS_DISABLED: [&str; 4] = [
+        "claude-haiku-5-5",
+        "claude-opus-4-6",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5",
+    ];
     for model in REJECTS_DISABLED.into_iter().chain(ACCEPTS_DISABLED) {
         let exhausted = vec![
             json!({"type":"thinking","thinking":"","signature":"stale-signature"}),

@@ -29,7 +29,7 @@ export const configurationSchema = z.object({
   model_routing_selection: z.literal("manual").optional(),
   chatgpt_account_id: z.string().regex(/^[\x21-\x7e]{1,256}$/).optional(),
   settings: z.object({
-    model: z.enum(["gpt-6-astra", "gpt-6.1-sol", "gpt-6-luna", "@cf/zai-org/glm-5.3", "kimi-k3", "mimo-v2.6-pro", "claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-5-5", "claude-opus-5-5"]),
+    model: z.enum(["gpt-6-astra", "gpt-6.1-sol", "gpt-6-luna", "@cf/zai-org/glm-5.3", "kimi-k3", "mimo-v2.6-pro", "claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-5-5", "claude-opus-5-5", "claude-haiku-5-5"]),
     thinking: z.enum(["none", "low", "medium", "high", "xhigh", "max"]),
     reasoning_mode: z.enum(["standard", "pro"]), fast_mode: z.boolean(),
   }).strict().refine(s => (s.model !== "gpt-6-astra" || s.reasoning_mode !== "pro")

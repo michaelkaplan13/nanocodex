@@ -118,5 +118,5 @@ export const INITIAL_MODEL_THINKING = {
   "gpt-6-astra": "low", "gpt-6.1-sol": "low", "gpt-6-luna": "medium",
   "@cf/zai-org/glm-5.3": "low", "kimi-k3": "low", "mimo-v2.6-pro": "low",
   "claude-sonnet-4-6": "medium", "claude-opus-4-6": "medium",
-  "claude-sonnet-5-5": "medium", "claude-opus-5-5": "medium",
+  "claude-sonnet-5-5": "medium", "claude-opus-5-5": "medium", "claude-haiku-5-5": "medium",
 } satisfies Record<ManagedAgentSettings["model"], ManagedAgentSettings["thinking"]>;

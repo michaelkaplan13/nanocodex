@@ -361,8 +361,43 @@ async fn journey() {
     assert_eq!(opus_request["request"]["thinking"]["type"], "adaptive");
     assert_eq!(opus_request["request"]["output_config"]["effort"], "medium");
     mutable.shutdown().await.unwrap();
+
+    // Haiku 5.5 thinks adaptively by default, so leaving Haiku 4.5's None
+    // must select its default effort instead of omitting thinking.
+    let (haiku, _events) =
+        Nanocodex::builder(Claude::new(claude.clone(), ClaudeModel::Haiku45.as_str()))
+            .thinking(Thinking::None)
+            .unwrap()
+            .build()
+            .unwrap();
+    haiku
+        .set_harness_model(ClaudeModel::Haiku55.into())
+        .await
+        .unwrap();
+    assert!(matches!(
+        haiku.set_thinking(Thinking::None).await,
+        Err(NanocodexError::InvalidRequest(_))
+    ));
+    haiku
+        .prompt("claude-haiku-55-policy")
+        .await
+        .unwrap()
+        .result()
+        .await
+        .unwrap();
+    let haiku_55_request = transcript.lock().unwrap().last().unwrap().clone();
+    assert_eq!(
+        haiku_55_request["request"]["model"],
+        ClaudeModel::Haiku55.as_str()
+    );
+    assert_eq!(haiku_55_request["request"]["thinking"]["type"], "adaptive");
+    assert_eq!(
+        haiku_55_request["request"]["output_config"]["effort"],
+        "medium"
+    );
+    haiku.shutdown().await.unwrap();
     println!(
-        "MODEL_POLICY Luna/None -> Sol/Low; Opus -> Haiku disables thinking; untouched restore -> Opus enables thinking; used restore stays locked with native history"
+        "MODEL_POLICY Luna/None -> Sol/Low; Opus -> Haiku disables thinking; untouched restore -> Opus enables thinking; Haiku 4.5 -> Haiku 5.5 enables thinking; used restore stays locked with native history"
     );
     let (registry, control, _updates) = channel(4);
     control.set_max_resident(1);

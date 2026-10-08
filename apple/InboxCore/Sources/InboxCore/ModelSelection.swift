@@ -21,6 +21,7 @@ public struct ModelChoice: Identifiable, Equatable, Sendable {
         .init(id: "claude-opus-4-6", name: "Claude Opus 4.6", efforts: ["low", "medium", "high"], provider: "claude", fastMode: false, reasoningModes: ["standard"]),
         .init(id: "claude-sonnet-5-5", name: "Claude Sonnet 5.5", efforts: ["low", "medium", "high"], provider: "claude", fastMode: false, reasoningModes: ["standard"]),
         .init(id: "claude-opus-5-5", name: "Claude Opus 5.5", efforts: ["low", "medium", "high"], provider: "claude", fastMode: false, reasoningModes: ["standard"]),
+        .init(id: "claude-haiku-5-5", name: "Claude Haiku 5.5", efforts: ["low", "medium", "high"], provider: "claude", fastMode: false, reasoningModes: ["standard"]),
         .init(id: "kimi-k3", name: "Kimi K3", efforts: ["low", "high"]),
         .init(id: "mimo-v2.6-pro", name: "MiMo V2.6 Pro", efforts: ["low", "medium", "high"]),
         .init(id: "@cf/zai-org/glm-5.3", name: "GLM 5.3", efforts: ["low", "medium", "high"]),

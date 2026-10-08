@@ -2577,7 +2577,7 @@ private final class MacModelBrokerFixture: URLProtocol {
         get { lock.lock(); defer { lock.unlock() }; return failure }
         set { lock.lock(); defer { lock.unlock() }; failure = newValue }
     }
-    static let claudeIDs = ["claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-5-5", "claude-opus-5-5"]
+    static let claudeIDs = ["claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-5-5", "claude-opus-5-5", "claude-haiku-5-5"]
     private static let lock = NSLock()
     private static var connected = false
     private static var pending = false

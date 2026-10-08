@@ -148,7 +148,7 @@ async fn models(State(state): State<Arc<Mutex<Journey>>>, headers: HeaderMap) ->
             json!({"id":"gpt-6.1-sol","name":"Sol","provider":"openai","thinking":["low","medium","high","xhigh","max"],"fast_mode":true,"reasoning_modes":["standard","pro"]}),
         ]
     } else if state.connected {
-        ["claude-sonnet-4-6","claude-opus-4-6","claude-sonnet-5-5","claude-opus-5-5"].into_iter().map(|id| json!({"id":id,"name":id,"provider":"claude","thinking":["low","medium","high"],"fast_mode":false,"reasoning_modes":["standard"]})).collect()
+        ["claude-sonnet-4-6","claude-opus-4-6","claude-sonnet-5-5","claude-opus-5-5","claude-haiku-5-5"].into_iter().map(|id| json!({"id":id,"name":id,"provider":"claude","thinking":["low","medium","high"],"fast_mode":false,"reasoning_modes":["standard"]})).collect()
     } else {
         vec![]
     };
@@ -213,7 +213,7 @@ async fn private_subscription_connect_catalog_and_disconnect_journey() {
         }
     ));
     let catalog = client.models().await.unwrap();
-    assert_eq!(catalog.data.len(), 4);
+    assert_eq!(catalog.data.len(), 5);
     assert_eq!(catalog.default_model, Some(ManagedModel::ClaudeSonnet46));
     assert!(!catalog.partial);
     assert!(catalog.availability["claude"].available);

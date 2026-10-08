@@ -20,6 +20,8 @@ pub enum ManagedModel {
     ClaudeSonnet55,
     /// Claude Opus 5.5 through the managed subscription transport.
     ClaudeOpus55,
+    /// Claude Haiku 5.5 through the managed subscription transport.
+    ClaudeHaiku55,
 }
 
 impl ManagedModel {
@@ -32,6 +34,7 @@ impl ManagedModel {
             Self::ClaudeOpus46 => "claude-opus-4-6",
             Self::ClaudeSonnet55 => "claude-sonnet-5-5",
             Self::ClaudeOpus55 => "claude-opus-5-5",
+            Self::ClaudeHaiku55 => "claude-haiku-5-5",
         }
     }
 
@@ -43,7 +46,8 @@ impl ManagedModel {
             Self::ClaudeSonnet46
             | Self::ClaudeOpus46
             | Self::ClaudeSonnet55
-            | Self::ClaudeOpus55 => Thinking::Medium,
+            | Self::ClaudeOpus55
+            | Self::ClaudeHaiku55 => Thinking::Medium,
         }
     }
 
@@ -55,7 +59,8 @@ impl ManagedModel {
             Self::ClaudeSonnet46
             | Self::ClaudeOpus46
             | Self::ClaudeSonnet55
-            | Self::ClaudeOpus55 => {
+            | Self::ClaudeOpus55
+            | Self::ClaudeHaiku55 => {
                 matches!(thinking, Thinking::Low | Thinking::Medium | Thinking::High)
             }
         }
@@ -69,7 +74,8 @@ impl ManagedModel {
             Self::ClaudeSonnet46
             | Self::ClaudeOpus46
             | Self::ClaudeSonnet55
-            | Self::ClaudeOpus55 => matches!(mode, ReasoningMode::Standard),
+            | Self::ClaudeOpus55
+            | Self::ClaudeHaiku55 => matches!(mode, ReasoningMode::Standard),
         }
     }
 
@@ -87,7 +93,8 @@ impl ManagedModel {
             Self::ClaudeSonnet46
             | Self::ClaudeOpus46
             | Self::ClaudeSonnet55
-            | Self::ClaudeOpus55 => None,
+            | Self::ClaudeOpus55
+            | Self::ClaudeHaiku55 => None,
         }
     }
 }
@@ -131,6 +138,7 @@ impl FromStr for ManagedModel {
             "claude-opus-4-6" => Ok(Self::ClaudeOpus46),
             "claude-sonnet-5-5" => Ok(Self::ClaudeSonnet55),
             "claude-opus-5-5" => Ok(Self::ClaudeOpus55),
+            "claude-haiku-5-5" => Ok(Self::ClaudeHaiku55),
             "gpt-6.1-sol" => Ok(Model::Sol.into()),
             "gpt-6-luna" => Ok(Model::Luna.into()),
             "gpt-6-astra" => Ok(Model::Astra.into()),

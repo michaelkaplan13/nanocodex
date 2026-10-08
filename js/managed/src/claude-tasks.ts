@@ -22,7 +22,7 @@ export function managedClaudeTasks(options: {
   const active = new Map<string, ClaudeAgent>();
   let closing = false;
   let configuration: ClaudeOptions | undefined;
-  const properties = { prompt: { type: "string" }, subagent_type: { type: "string" }, model: { type: "string", enum: ["claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-5-5", "claude-opus-5-5"] } };
+  const properties = { prompt: { type: "string" }, subagent_type: { type: "string" }, model: { type: "string", enum: ["claude-sonnet-4-6", "claude-opus-4-6", "claude-sonnet-5-5", "claude-opus-5-5", "claude-haiku-5-5"] } };
   const tools: Tool[] = [
     { name: "Task", description: "Delegate a bounded task to a real Claude child sharing the current authorized tools. This call blocks until completion. Parent cancellation cancels the child. The provider/model is pinned; cross-provider overrides are unsupported.", inputSchema: { type: "object", properties, required: ["prompt", "subagent_type"], additionalProperties: false },
       handler: async (raw, context) => {

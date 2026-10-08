@@ -319,9 +319,8 @@ pub struct ClaudeBuilder {
 impl ClaudeBuilder {
     fn new(claude: Claude) -> Self {
         let context_window_tokens = match claude.model.as_str() {
-            "claude-opus-5-5" | "claude-fable-5-1" | "claude-sonnet-5-5" | "claude-sonnet-5" => {
-                1_000_000
-            }
+            "claude-opus-5-5" | "claude-fable-5-1" | "claude-sonnet-5-5" | "claude-sonnet-5"
+            | "claude-haiku-5-5" => 1_000_000,
             _ => 200_000, // Conservative fallback; override for other models.
         };
         Self {
@@ -1523,7 +1522,8 @@ async fn web_fetch_with_source<P: nanocodex_claude_tools::web::ApprovedWebFetchS
 /// model table at https://platform.claude.com/docs/en/about-claude/models/extended-thinking-models,
 /// `disabled` is a 400 on Opus 5.5, Fable 5.1 and Sonnet 5.5. Sonnet 5.5's lowest
 /// setting is `between_tools` (effort high or below); Opus 5.5 and Fable 5.1 accept
-/// adaptive thinking at low effort.
+/// adaptive thinking at low effort. Haiku 5.5 accepts `disabled` at its default
+/// effort, so its summary request stays text-only like older models.
 enum RecoveryThinking {
     Disabled,
     AdaptiveLow,

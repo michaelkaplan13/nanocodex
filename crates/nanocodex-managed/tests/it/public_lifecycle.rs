@@ -459,7 +459,7 @@ async fn claude_native_create_route_prompt_and_retained_reopen_journey() {
         let address = listener.local_addr().unwrap();
         let server = tokio::spawn(async move { axum::serve(listener, app).await.unwrap() });
         let client = ManagedClient::new(format!("http://{address}"), ManagedApiKey::parse(api_key).unwrap()).unwrap();
-        for model in [ManagedModel::ClaudeSonnet46, ManagedModel::ClaudeOpus46, ManagedModel::ClaudeSonnet55, ManagedModel::ClaudeOpus55] {
+        for model in [ManagedModel::ClaudeSonnet46, ManagedModel::ClaudeOpus46, ManagedModel::ClaudeSonnet55, ManagedModel::ClaudeOpus55, ManagedModel::ClaudeHaiku55] {
             let settings = AgentSettings::new(model);
             let receipt = client.create_with_settings(settings).await.unwrap();
             assert_eq!(receipt.agent_id, AGENT_ID);
@@ -477,7 +477,7 @@ async fn claude_native_create_route_prompt_and_retained_reopen_journey() {
             let invalid = AgentSettings { fast_mode: true, ..AgentSettings::new(model) };
             assert!(matches!(client.create_with_settings(invalid).await, Err(ManagedError::Configuration(_))));
         }
-        assert_eq!(lock(&fixture.inner.create_bodies).len(), 4, "unsupported effort/pro/fast and legacy third-party fast never reaches transport");
+        assert_eq!(lock(&fixture.inner.create_bodies).len(), 5, "unsupported effort/pro/fast and legacy third-party fast never reaches transport");
         let (agent, _events) = Nanocodex::builder(Managed::create(client.clone())).build().await.unwrap();
         // Driver replay starts at the retained server cursor, not an OAI fallback.
         fixture.wait_for_event_cursor("44").await;
